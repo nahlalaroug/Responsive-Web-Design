@@ -1,0 +1,73 @@
+<p>search-engine works!</p>
+
+<input type="text" name="searchWord" (input)="updateData($event.target.name, $event.target.value)">
+<input type="button" value="TEST" (click)="requestJDM()">
+<p (click)="printRelation()">choix des relations</p>
+<div *ngIf="prel">
+  <div *ngFor="let relations of relationList">
+    <input type="checkbox" (check)="queryBuilder(relations[0])">
+    <div class="tooltip1">
+      {{relations[1]}}<span class="tooltiptext1"> {{relations[2]}}</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="resjdm">
+  Relation entrante : <br />
+  <button type="button" name="button" (click)="previousInbounds()"> previous</button>
+  <button type="button" name="button" (click)="nextInbounds()"> next</button>
+  <table class="table ">
+    <thead>
+      <tr style="width: 100%">
+        <th scope="col">id relation</th>
+        <th scope="col">type de relation</th>
+        <th scope="col">relation avec</th>
+        <th scope="col">poid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div *ngFor="let in of inbounds.slice(lowerBound,upperBound)">
+        <tr style="width: 100%">
+          <td>{{ in.id }}</td>
+          <td>
+            <div class="tooltip1">
+              {{ in.rtype }}<span class="tooltiptext1"> {{ findDefinition(in.rtype) }}</span>
+            </div>
+          </td>
+          <td>{{ in.rwith }}</td>
+          <td>{{ in.weight }}</td>
+        </tr>
+      </div>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="resjdm">
+  Relation sortante : <br />
+  <button type="button" name="button" (click)="previousOutgoing()"> previous</button>
+  <button type="button" name="button" (click)="nextOutgoing()"> next</button>
+  <table class="table ">
+    <thead>
+      <tr style="width: 100%">
+        <th scope="col">id relation</th>
+        <th scope="col">type de relation</th>
+        <th scope="col">relation avec</th>
+        <th scope="col">poid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div *ngFor="let out of outgoing.slice(lowerBound2,upperBound2)">
+        <tr style="width: 100%">
+          <td>{{ out.id }}</td>
+          <td>
+            <div class="tooltip1">
+              {{ out.rtype }}<span class="tooltiptext1"> {{ findDefinition(out.rtype) }}</span>
+            </div>
+          </td>
+          <td>{{out.rwith }}</td>
+          <td>{{ out.weight }}</td>
+        </tr>
+      </div>
+    </tbody>
+  </table>
+</div>
